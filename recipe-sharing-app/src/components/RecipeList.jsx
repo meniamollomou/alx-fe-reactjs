@@ -5,9 +5,8 @@ const RecipeList = () => {
 
   return (
     <div>
-      <h2>Recipe List</h2>
       {recipes.map((recipe) => (
-        <div key={recipe.id} style={{ marginBottom: '1rem' }}>
+        <div key={recipe.id}>
           <h3>{recipe.title}</h3>
           <p>{recipe.description}</p>
         </div>

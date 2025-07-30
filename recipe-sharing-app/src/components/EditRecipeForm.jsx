@@ -1,25 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AddRecipeForm from './components/AddRecipeForm';
-import RecipeList from './components/RecipeList';
-import RecipeDetails from './components/RecipeDetails';
+import { useState } from 'react';
+import { useRecipeStore } from './recipeStore'; // inside components folder
 
-function App() {
+const EditRecipeForm = ({ recipe }) => {
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
+  const [title, setTitle] = useState(recipe.title);
+  const [description, setDescription] = useState(recipe.description);
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 🔥 required keyword
+    updateRecipe({ id: recipe.id, title, description });
+  };
+
   return (
-    <Router>
-      <div>
-        <h1>Recipe Sharing App</h1>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <AddRecipeForm />
-              <RecipeList />
-            </>
-          } />
-          <Route path="/recipe/:id" element={<RecipeDetails />} />
-        </Routes>
-      </div>
-    </Router>
+    <form onSubmit={handleSubmit}>
+      <h3>Edit Recipe</h3>
+      <input
+        type="text"
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+      />
+      <textarea
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+      />
+      <button type="submit">Update</button>
+    </form>
   );
-}
+};
 
-export default App;
+export default EditRecipeForm;

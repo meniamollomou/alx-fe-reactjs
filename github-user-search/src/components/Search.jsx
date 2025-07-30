@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { fetchAdvancedSearchResults } from '../services/githubService';
+import { fetchAdvancedSearchResults, fetchUserData } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
   const [results, setResults] = useState([]);
+  const [singleUser, setSingleUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -14,10 +15,18 @@ const Search = () => {
     setLoading(true);
     setError(false);
     setResults([]);
+    setSingleUser(null);
 
     try {
-      const data = await fetchAdvancedSearchResults(username, location, minRepos);
-      setResults(data.items); // GitHub returns { total_count, items: [...] }
+      if (!location && !minRepos) {
+        // Basic user search
+        const userData = await fetchUserData(username);
+        setSingleUser(userData);
+      } else {
+        // Advanced search
+        const data = await fetchAdvancedSearchResults(username, location, minRepos);
+        setResults(data.items); // GitHub returns { total_count, items: [...] }
+      }
     } catch {
       setError(true);
     } finally {
@@ -60,6 +69,25 @@ const Search = () => {
       {loading && <p className="text-center mt-4">Loading...</p>}
       {error && <p className="text-center text-red-500 mt-4">Looks like we cant find the user</p>}
 
+      {/* Basic single user result */}
+      {singleUser && (
+        <div className="mt-6 flex items-center space-x-4 p-4 border rounded shadow">
+          <img src={singleUser.avatar_url} alt={singleUser.login} className="w-16 h-16 rounded-full" />
+          <div>
+            <h3 className="text-lg font-semibold">{singleUser.name || singleUser.login}</h3>
+            <a
+              href={singleUser.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline"
+            >
+              View GitHub Profile
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Advanced multiple users result */}
       <div className="mt-6 space-y-4">
         {results.map((user) => (
           <div key={user.id} className="flex items-center space-x-4 p-4 border rounded shadow">

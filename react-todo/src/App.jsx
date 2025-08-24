@@ -3,8 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-// ✅ Import TodoList
-import TodoList from './TodoList'
+// ✅ Import Testing component
+import Testing from './Testing'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,13 +28,12 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-
-      {/* ✅ Render TodoList */}
-      <TodoList />
-
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
+      {/* ✅ Render the Testing component */}
+      <Testing />
     </>
   )
 }

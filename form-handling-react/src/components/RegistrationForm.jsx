@@ -1,45 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: ""
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+const RegistrationForm = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData.username || !formData.email || !formData.password) {
-      setError("All fields are required!");
-      return;
-    }
-
-    setError("");
-    console.log("Form submitted:", formData);
-    alert("User registered successfully!");
+    console.log({ username, email, password });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Controlled Registration Form</h2>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       <div>
         <label>Username:</label>
         <input
           type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
+          value={username}   // ✅ controlled component
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
 
@@ -47,9 +25,8 @@ function RegistrationForm() {
         <label>Email:</label>
         <input
           type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          value={email}   // ✅ controlled component
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
@@ -57,15 +34,14 @@ function RegistrationForm() {
         <label>Password:</label>
         <input
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}   // ✅ controlled component
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
       <button type="submit">Register</button>
     </form>
   );
-}
+};
 
 export default RegistrationForm;

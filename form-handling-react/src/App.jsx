@@ -1,13 +1,12 @@
 import RegistrationForm from "./components/RegistrationForm";
-import formikForm from "./components/formikForm"; 
+import FormikForm from "./components/formikForm.jsx";
 
 function App() {
   return (
-    <div>
-      <h1>Form Handling in React</h1>
+    <div style={{ padding: "20px" }}>
       <RegistrationForm />
       <hr />
-      <formikForm />
+      <FormikForm />
     </div>
   );
 }

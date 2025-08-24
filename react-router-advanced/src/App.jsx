@@ -1,19 +1,20 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Login from "./components/Login";
+import BlogPost from "./components/BlogPost";
 import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
 
-        {/* Protected Route */}
+        {/* Dynamic blog route */}
+        <Route path="/blog/:id" element={<BlogPost />} />
+
+        {/* Example of protected profile route */}
         <Route
           path="/profile"
           element={
@@ -25,6 +26,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

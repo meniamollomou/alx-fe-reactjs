@@ -1,8 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-export default function FormikForm() {
-  // Validation schema
+export default function formikForm() {
+  // ✅ Yup validation schema
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
     email: Yup.string()

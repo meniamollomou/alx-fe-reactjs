@@ -1,3 +1,5 @@
+import TodoList from './components/TodoList'
+
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -34,6 +36,9 @@ function App() {
 
       {/* ✅ Render the Testing component */}
       <Testing />
+
+      {/* ✅ Render the TodoList component */}
+      <TodoList />
     </>
   )
 }
